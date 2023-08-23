@@ -8,43 +8,48 @@
     <title>Meme-Generator</title>
 </head>
 
-<body>
+<body class="main-layout" onload="onInit()">
 
     <header class="main-header">
-        <nav class="main-nav-container">
-            <div class="logo">Meme</div>
+        <nav class="main-nav-container flex space-between align-center">
+            <div class="logo">Memegen</div>
             <div class="main-nav">
-                <ul class="clean-list">
-                    <li><a href="#">Gallery</a></li>
+                <ul class="clean-list grid flow-column">
+                    <li><a href="#" class="btn-gallery" onclick="toggleGallery()">Gallery</a></li>
                     <li><a href="#">Saved</a></li>
                     <li><a href="#">About</a></li>
                 </ul>
             </div>
-            <button class="btn-toggle-menu" onclick="toggleMenu()">☰</button>
+            <!-- <button class="btn-toggle-menu" onclick="toggleMenu()">☰</button> -->
         </nav>
     </header>
 
     <main class="main-content">
+            <div class="canvas-container flex justify-center">
+                <canvas width="400" height="400"></canvas>
+            </div>
 
-        <div class="canvas-container">
-            <canvas width="400" height="400"></canvas>
-        </div>
+            <section class="meme-editor flex">
+                <input class="text-input" type="text" name="" id="textInput" placeholder="Add text here"
+                    oninput="onInputText(this.value)">
+            </section>
 
-        <section class="meme-editor">
+        </main>
 
+        <section class="gallery hide">
+            <div class="gallery-container">
+            </div>
         </section>
-
-        <section class="gallery">
-            
-        </section>
-
-    </main>
 
     <footer class="main-footer">
 
     </footer>
 
-    <script src="./js/main.js"></script>
+    <script src="./js/services/util.js"></script>
+    <script src="./js/services/storage.service.js"></script>
+    <script src="./js/services/meme.service.js"></script>
+    <script src="./js/controllers/meme.controller.js"></script>
+    <script src="./js/controllers/gallery.controller.js"></script>
 </body>
 
 </html>

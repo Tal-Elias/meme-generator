@@ -1,0 +1,7 @@
+.meme-editor {
+    flex-direction: column;
+}
+
+.meme-editor > * {
+    margin: 0 auto;
+}

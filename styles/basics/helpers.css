@@ -2,3 +2,37 @@
     margin: 0;
     list-style-type: none;
 }
+
+.hide {
+    display: none;
+}
+
+/* flex helpers */
+.flex {
+    display: flex;
+}
+
+.flex-column {
+    flex-direction: column;
+}
+
+.justify-center {
+    justify-content: center;
+}
+
+.space-between {
+    justify-content: space-between;
+}
+
+.align-center {
+    align-items: center;
+}
+
+/* grid helpers */
+.grid {
+    display: grid;
+}
+
+.flow-column {
+    grid-auto-flow: column;
+}
