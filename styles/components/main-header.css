@@ -1,10 +1,12 @@
 .main-header {
     grid-column: 2;
-    background-color: blueviolet;
+    min-height: var(--headerHeight);
+    margin-block-start: 1em;
     border-radius: 10px;
+    background-color: var(--clrSecondary);
 }
 
-.main-header a {
+.main-header li {
     /* position: relative; */
     display: grid;
     justify-content: center;
@@ -13,6 +15,9 @@
     min-width: var(--headerHeight);
     min-height: var(--headerHeight);
 
-    color: var(--clrPrimary-4);
-    transition: color .3s ease;
+}
+
+.main-header a {
+    font-size: 1.3rem;
+    color: var(--clrTertiary);
 }

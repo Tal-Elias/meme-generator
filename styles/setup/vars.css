@@ -1,5 +1,11 @@
 :root {
     --clrPrimaryBase: #161616;
+    --clrPrimary-1: #eceaff;
+    --clrPrimary-2: #ffffff;
+
+    --clrSecondary: #8a2be2;
+    --clrTertiary: #87fdf3;
+
 
     --headerHeight: 100px;
 }

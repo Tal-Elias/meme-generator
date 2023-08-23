@@ -2,6 +2,8 @@
 
 let gElCanvas
 let gCtx
+let gCurrFillColor = ''
+let gCurrStrokeColor = ''
 
 function onInit() {
     gElCanvas = document.querySelector('canvas')
@@ -29,15 +31,15 @@ function renderMeme() {
     elImg.src = url
     elImg.onload = () => {
         gCtx.drawImage(elImg, 0, 0, elImg.naturalWidth, elImg.naturalHeight)
-        drawText(lines[0].txt, lines[0].color, lines[0].size, 200, 50)
+        drawText(lines[0].txt, lines[0].color, lines[0].size, lines[0].font, 200, 50)
     }
 }
 
-function drawText(text, color, size, x, y) {
-    gCtx.lineWidth = 1
-    gCtx.strokeStyle = 'white'
-    gCtx.fillStyle = color
-    gCtx.font = '40px roboto'
+function drawText(text, color, size, font, x, y) {
+    gCtx.lineWidth = 2
+    gCtx.strokeStyle = (gCurrStrokeColor) ? gCurrStrokeColor : 'black'
+    gCtx.fillStyle = (gCurrFillColor) ? gCurrFillColor : color
+    gCtx.font = `${size}px ${font}`
     gCtx.textAlign = 'center'
     gCtx.textBaseline = 'middle'
 
@@ -62,19 +64,24 @@ function toggleGallery() {
     }
 }
 
-// function resizeCanvas() {
-//     const elContainer = document.querySelector('.canvas-container')
-//     gElCanvas.width = elContainer.clientWidth - 2
-// }
-
 function resizeCanvas() {
     const elContainer = document.querySelector('.canvas-container')
     gElCanvas.width = elContainer.offsetWidth
     gElCanvas.height = elContainer.offsetHeight
 }
 
-// function resizeCanvas() {
-//     const elContainer = document.querySelector('.canvas-container')
-//     gElCanvas.width = elContainer.offsetWidth
-//     gElCanvas.height = elContainer.offsetHeight
-// }
+function onSetStrokeColor(strokeColor) {
+    gCurrStrokeColor = strokeColor
+    renderMeme()
+}
+
+function onSetFillColor(fillColor) {
+    gCurrFillColor = fillColor
+    renderMeme()
+}
+
+function onDownloadCanvas(elLink) {
+    const dataUrl = gElCanvas.toDataURL()
+    elLink.href = dataUrl
+    elLink.download = 'my-img'
+}

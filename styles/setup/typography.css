@@ -2,3 +2,39 @@
     font-family: roboto;
     src: url(../../fonts/roboto/Roboto-Regular.ttf);
 }
+
+@font-face {
+    font-family: roboto-bold;
+    src: url(../../fonts/roboto/Roboto-Bold.ttf);
+}
+
+@font-face {
+    font-family: press-start-2p;
+    src: url(../../fonts/press-start-2p/PressStart2P-Regular.ttf);
+}
+
+@font-face {
+    font-family: fa;
+    src: url("../../fonts/fa/fa-solid-900.ttf");
+}
+
+.fa::before {
+    font-family: fa;
+}
+
+.fa.download::before {
+    content: "\f019";
+}
+
+.fa.share::before {
+    content: "\f1e0";
+}
+
+.fa.stroke-color::before {
+    content: "\f1fc";
+    color: black;
+}
+.fa.fill-color::before {
+    content: "\f576";
+    color: black;
+}

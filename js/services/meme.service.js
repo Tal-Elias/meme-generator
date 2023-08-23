@@ -50,7 +50,8 @@ let gMeme = {
     lines: [
         {
             txt: gMemeText[getRandomInt(0, 18)],
-            size: 20,
+            font: 'roboto',
+            size: 40,
             color: getRandomColor()
         }
     ]
