@@ -6,11 +6,11 @@
 .meme-editor .text-input {
     border-radius: 2em;
     height: 4em;
+    text-align: center;
 }
 
 .meme-editor .text-input::placeholder {
-    font-size: 1.2rem;
-    text-align: center;
+    font-size: 1.3rem;
 }
 
 .meme-editor .download {
@@ -25,6 +25,14 @@
     background-color: var(--clrPrimary-2);
 }
 
-.meme-editor .edit-lines .btn{
-    background-color: var(--clrPrimary-2);
+.meme-editor .add-line{
+    background-color: greenyellow;
+}
+
+.meme-editor .switch-line{
+    background-color: rgb(47, 179, 255);
+}
+
+.meme-editor .remove-line{
+    background-color: rgb(255, 47, 47);
 }

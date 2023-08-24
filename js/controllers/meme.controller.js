@@ -2,45 +2,47 @@
 
 let gElCanvas
 let gCtx
-let gCurrFillColor = ''
-let gCurrStrokeColor = ''
 let gStartPos
-let gLineVerticalPoseight
+let gLineVerticalPos
 let gLineCount
 const TOUCH_EVS = ['touchstart', 'touchmove', 'touchend']
 
 function onInit() {
     gElCanvas = document.querySelector('canvas')
     gCtx = gElCanvas.getContext('2d')
-    gLineVerticalPoseight = 90
-    gLineCount = 0
+    gLineVerticalPos = 90
+    gLineCount = 2
     addListeners()
     renderMeme()
 }
 
 function renderMeme() {
-    const { selectedImgId, lines } = getMeme()
+    const { selectedImgId, lines, selectedLineIdx } = getMeme()
     const { url } = getImg()[selectedImgId]
     const elImg = new Image()
     elImg.src = url
     gCtx.drawImage(elImg, 0, 0, gElCanvas.width, gElCanvas.height)
 
-    for (const line of lines) {
-        drawText(line.txt, line.fill, line.stroke, line.size, line.font, gElCanvas.width / 2, line.y)
-    }
+    lines.forEach((line, idx) => {
+        drawText(line, line.pos.x, line.pos.y)
+        setTextMetrics(line.txt, line)
+        if (idx === selectedLineIdx) {
+            document.querySelector('.text-input').placeholder = ''
+            document.querySelector('.text-input').value = line.txt
+        }
+    })
 }
 
-function drawText(text, fill, stroke, size, font, x, y) {
-    // console.log(x, y);
+function drawText(line, x, y) {
     gCtx.lineWidth = 2
-    gCtx.strokeStyle = (gCurrStrokeColor) ? gCurrStrokeColor : stroke
-    gCtx.fillStyle = (gCurrFillColor) ? gCurrFillColor : fill
-    gCtx.font = `${size}px ${font}`
+    gCtx.strokeStyle = line.stroke
+    gCtx.fillStyle = line.fill
+    gCtx.font = `${line.size}px ${line.font}`
     gCtx.textAlign = 'center'
     gCtx.textBaseline = 'middle'
 
-    gCtx.fillText(text, x, y)
-    gCtx.strokeText(text, x, y)
+    gCtx.fillText(line.txt, x, y)
+    gCtx.strokeText(line.txt, x, y)
 }
 
 function addListeners() {
@@ -65,15 +67,44 @@ function addTouchListeners() {
 }
 
 function onDown(ev) {
-    getEvPos(ev)
+    const res = getEvPos(ev)
+    const clickedLineIdx = findClickedLine(res)
+    setSelectedLineIdx(clickedLineIdx)
+
+    if (clickedLineIdx !== -1) {
+        const meme = getMeme()
+        const selectedLine = meme.lines[clickedLineIdx]
+        selectedLine.isDrag = true
+        gStartPos = { x: res.x, y: res.y }
+        const elInput = document.querySelector('.text-input')
+        elInput.value = selectedLine.txt
+        elInput.placeholder = selectedLine.txt
+    }
 }
 
 function onMove(ev) {
+    const res = getEvPos(ev)
+    const meme = getMeme()
+    const selectedLine = meme.lines[gSelectedLineIdx]
 
+    if (selectedLine && selectedLine.isDrag) {
+        const dx = res.x - gStartPos.x
+        const dy = res.y - gStartPos.y
+
+        selectedLine.pos.x += dx
+        selectedLine.pos.y += dy
+
+        gStartPos = { x: res.x, y: res.y }
+        renderMeme()
+    }
 }
 
 function onUp() {
-
+    const meme = getMeme()
+    const selectedLine = meme.lines[gSelectedLineIdx]
+    if (selectedLine) {
+        selectedLine.isDrag = false
+    }
 }
 
 function getEvPos(ev) {
@@ -84,22 +115,14 @@ function getEvPos(ev) {
     }
 
     if (TOUCH_EVS.includes(ev.type)) {
-        // Prevent triggering the mouse ev
         ev.preventDefault()
-        // Gets the first touch point
         ev = ev.changedTouches[0]
-        // Calc the right pos according to the touch screen
         pos = {
             x: ev.pageX - ev.target.offsetLeft - ev.target.clientLeft,
             y: ev.pageY - ev.target.offsetTop - ev.target.clientTop,
         }
     }
-    // console.log(pos);
     return pos
-}
-
-function findClickedLineIdx(clickedPos) {
-
 }
 
 function onInputText(txt) {
@@ -107,8 +130,16 @@ function onInputText(txt) {
     renderMeme()
 }
 
+function updateInputText() {
+
+}
+
 function onAddLine() {
-    if (gLineCount > 7) return
+    if (gLineCount >= 10) return
+    if (!gLineCount) {
+        gLineVerticalPos = 50
+        gLineCount = 0
+    }
     const meme = getMeme()
     const { lines } = meme
     const line = {
@@ -118,12 +149,27 @@ function onAddLine() {
         fill: 'white',
         stroke: 'black',
         isDrag: false,
-        y: gLineVerticalPoseight
+        pos: { x: 450 / 2, y: gLineVerticalPos }
     }
-    gLineVerticalPoseight += 40
+    gLineVerticalPos += 5
     gLineCount++
     lines.push(line)
     renderMeme()
+}
+
+function switchLine() {
+
+}
+
+function removeLine() {
+    if (!gLineCount) return
+    const meme = getMeme()
+    if (gSelectedLineIdx !== -1) {
+        meme.lines.splice(gSelectedLineIdx, 1)
+        gSelectedLineIdx = -1
+        renderMeme()
+        gLineCount--
+    }
 }
 
 function toggleGallery() {
@@ -146,7 +192,7 @@ function resizeCanvas() {
 
 function onSetFontIncrease() {
     const meme = getMeme()
-    const line = meme.lines[0]
+    const line = meme.lines[gSelectedLineIdx]
     if (line.size > 100) return
     line.size += 5
     renderMeme()
@@ -154,19 +200,23 @@ function onSetFontIncrease() {
 
 function onSetFontDecrease() {
     const meme = getMeme()
-    const line = meme.lines[0]
+    const line = meme.lines[gSelectedLineIdx]
     if (line.size <= 10) return
     line.size -= 5
     renderMeme()
 }
 
 function onSetStrokeColor(strokeColor) {
-    gCurrStrokeColor = strokeColor
+    const meme = getMeme()
+    const line = meme.lines[gSelectedLineIdx]
+    line.stroke = strokeColor
     renderMeme()
 }
 
 function onSetFillColor(fillColor) {
-    gCurrFillColor = fillColor
+    const meme = getMeme()
+    const line = meme.lines[gSelectedLineIdx]
+    line.fill = fillColor
     renderMeme()
 }
 
@@ -174,4 +224,32 @@ function onDownloadCanvas(elLink) {
     const dataUrl = gElCanvas.toDataURL()
     elLink.href = dataUrl
     elLink.download = 'my-img'
+}
+
+function setTextMetrics(txt, line) {
+    const textMetrics = gCtx.measureText(txt)
+    line.length = textMetrics.width
+}
+
+function findClickedLine(clickPos) {
+    const meme = getMeme()
+    let clickedLineIdx = -1
+
+    meme.lines.forEach((line, idx) => {
+        const textWidth = line.length
+        const lineHeight = line.size
+
+        const lineLeft = line.pos.x - textWidth / 2
+        const lineRight = line.pos.x + textWidth / 2
+        const lineTop = line.pos.y - lineHeight / 2
+        const lineBottom = line.pos.y + lineHeight / 2
+
+        if (
+            clickPos.x >= lineLeft && clickPos.x <= lineRight &&
+            clickPos.y >= lineTop && clickPos.y <= lineBottom
+        ) {
+            clickedLineIdx = idx
+        }
+    })
+    return clickedLineIdx
 }

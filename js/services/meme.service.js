@@ -1,7 +1,11 @@
 'use strict'
 
 const STORAGE_KEY = 'memesDB'
+
+let gKeywordSearchCountMap = { 'funny': 12, 'cat': 16, 'baby': 2 }
+
 let gLine
+let gSelectedLineIdx = 0
 
 let gImgs = [
     { id: 1, url: 'img/1.jpg', keywords: ['funny', 'cat'] },
@@ -56,7 +60,7 @@ let gMeme = {
             fill: 'white',
             stroke: 'black',
             isDrag: false,
-            y: 50
+            pos: { x: 450 / 2, y: 50 }
         },
         {
             txt: gMemeText[getRandomInt(0, 18)],
@@ -65,12 +69,10 @@ let gMeme = {
             fill: 'white',
             stroke: 'black',
             isDrag: false,
-            y: 400
+            pos: { x: 450 / 2, y: 400 }
         }
     ]
 }
-
-let gKeywordSearchCountMap = { 'funny': 12, 'cat': 16, 'baby': 2 }
 
 function getMeme() {
     return gMeme
@@ -81,13 +83,15 @@ function getImg() {
 }
 
 function setLineText(txt) {
-    const { lines } = gMeme
-    const line1 = lines[0]
-    const line2 = lines[1]
-    line1.txt = txt
-    line2.txt = txt
+    const { selectedLineIdx, lines } = gMeme
+    const line = lines[selectedLineIdx]
+    line.txt = txt
 }
 
 function setImg(id) {
     gMeme.selectedImgId = id - 1
+}
+
+function setSelectedLineIdx(idx) {
+    gSelectedLineIdx = idx
 }

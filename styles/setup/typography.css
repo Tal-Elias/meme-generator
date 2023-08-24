@@ -54,3 +54,13 @@
     content: "\f055";
     color: var(--clrPrimaryBase);
 }
+
+.fa.switch-line::before {
+    content: "\f2f1";
+    color: var(--clrPrimaryBase);
+}
+
+.fa.remove-line::before {
+    content: "\f2ed";
+    color: var(--clrPrimaryBase);
+}

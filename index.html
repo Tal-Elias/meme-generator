@@ -30,10 +30,11 @@
         </div>
 
         <section class="meme-editor flex column">
-            <input class="text-input" type="text" name="" id="textInput" placeholder="Add text here"
-                oninput="onInputText(this.value)">
+            <input class="text-input" type="text" oninput="onInputText(this.value)">
             <div class="edit-lines">
                 <button class="btn add-line fa" onclick="onAddLine()"></button>
+                <button class="btn switch-line fa" onclick="switchLine()"></button>
+                <button class="btn remove-line fa" onclick="removeLine()"></button>
             </div>
             <div class="edit-buttons">
                 <button class="btn font-increase fa" onclick="onSetFontIncrease()"></button>
