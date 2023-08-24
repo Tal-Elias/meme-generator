@@ -1,0 +1,12 @@
+/* LARGE */
+@media (min-width: 1120px) {
+    .main-layout {
+        grid-template-columns:
+            minmax(var(--layout-padding), 1fr) minmax(auto, var(--l)) minmax(var(--layout-padding), 1fr);
+    }
+
+    :root {
+        --headerHeight: 130px;
+    }
+
+}

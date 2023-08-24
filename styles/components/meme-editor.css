@@ -1,7 +1,6 @@
 .meme-editor {
-    grid-template-columns: 1fr;
-    grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
-    align-items: center;
+    gap: 20px;
+    width: 450px;
 }
 
 .meme-editor .text-input {
@@ -14,10 +13,6 @@
     text-align: center;
 }
 
-.meme-editor .user-buttons {
-    grid-row: 5;
-}
-
 .meme-editor .download {
     background-color: rgb(0, 47, 255);
 }
@@ -26,8 +21,10 @@
     background-color: rgb(0, 202, 78);
 }
 
-.meme-editor 
-.fill-color,
-.stroke-color {
+.meme-editor .edit-buttons .btn{
+    background-color: var(--clrPrimary-2);
+}
+
+.meme-editor .edit-lines .btn{
     background-color: var(--clrPrimary-2);
 }

@@ -12,7 +12,7 @@
 
     <header class="main-header">
         <nav class="main-nav-container flex space-between align-center">
-            <div class="logo">Memegen</div>
+            <div class="logo" onclick="location.reload()">Memegen</div>
             <div class="main-nav">
                 <ul class="clean-list grid flow-column">
                     <li><a href="#" class="btn-gallery" onclick="toggleGallery()">Gallery</a></li>
@@ -26,13 +26,18 @@
 
     <main class="main-content">
         <div class="canvas-container flex justify-center">
-            <canvas width="400" height="400"></canvas>
+            <canvas width="450" height="450"></canvas>
         </div>
 
-        <section class="meme-editor grid">
+        <section class="meme-editor flex column">
             <input class="text-input" type="text" name="" id="textInput" placeholder="Add text here"
                 oninput="onInputText(this.value)">
+            <div class="edit-lines">
+                <button class="btn add-line fa" onclick="onAddLine()"></button>
+            </div>
             <div class="edit-buttons">
+                <button class="btn font-increase fa" onclick="onSetFontIncrease()"></button>
+                <button class="btn font-decrease fa" onclick="onSetFontDecrease()"></button>
                 <button class="btn stroke-color fa">
                     <input type="color" oninput="onSetStrokeColor(this.value)">
                 </button>
@@ -42,7 +47,7 @@
             </div>
             <div class="user-buttons">
                 <a class="btn download fa" onclick="onDownloadCanvas(this)">Download</a>
-                <button class="btn share fa">Share</button>
+                <button class="btn share fa" onclick="onUploadImg()">Share</button>
             </div>
         </section>
 

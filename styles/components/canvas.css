@@ -1,0 +1,5 @@
+canvas {
+    border-radius: 10px;
+    cursor: grab;
+    display: block;
+}

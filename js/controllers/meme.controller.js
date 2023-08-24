@@ -4,24 +4,18 @@ let gElCanvas
 let gCtx
 let gCurrFillColor = ''
 let gCurrStrokeColor = ''
+let gStartPos
+let gLineVerticalPoseight
+let gLineCount
+const TOUCH_EVS = ['touchstart', 'touchmove', 'touchend']
 
 function onInit() {
     gElCanvas = document.querySelector('canvas')
     gCtx = gElCanvas.getContext('2d')
-    // const {selectedImgId, lines} = getMeme()
-    // console.log(selectedImgId, lines[0].color, lines[0].txt, lines[0].size);
+    gLineVerticalPoseight = 90
+    gLineCount = 0
+    addListeners()
     renderMeme()
-    // resizeCanvas()
-    // addListeners()
-}
-
-function addListeners() {
-    // addMouseListeners()
-    // addTouchListeners()
-    window.addEventListener('resize', () => {
-        resizeCanvas()
-        renderMeme()
-    })
 }
 
 function renderMeme() {
@@ -29,16 +23,18 @@ function renderMeme() {
     const { url } = getImg()[selectedImgId]
     const elImg = new Image()
     elImg.src = url
-    elImg.onload = () => {
-        gCtx.drawImage(elImg, 0, 0, elImg.naturalWidth, elImg.naturalHeight)
-        drawText(lines[0].txt, lines[0].color, lines[0].size, lines[0].font, 200, 50)
+    gCtx.drawImage(elImg, 0, 0, gElCanvas.width, gElCanvas.height)
+
+    for (const line of lines) {
+        drawText(line.txt, line.fill, line.stroke, line.size, line.font, gElCanvas.width / 2, line.y)
     }
 }
 
-function drawText(text, color, size, font, x, y) {
+function drawText(text, fill, stroke, size, font, x, y) {
+    // console.log(x, y);
     gCtx.lineWidth = 2
-    gCtx.strokeStyle = (gCurrStrokeColor) ? gCurrStrokeColor : 'black'
-    gCtx.fillStyle = (gCurrFillColor) ? gCurrFillColor : color
+    gCtx.strokeStyle = (gCurrStrokeColor) ? gCurrStrokeColor : stroke
+    gCtx.fillStyle = (gCurrFillColor) ? gCurrFillColor : fill
     gCtx.font = `${size}px ${font}`
     gCtx.textAlign = 'center'
     gCtx.textBaseline = 'middle'
@@ -47,8 +43,86 @@ function drawText(text, color, size, font, x, y) {
     gCtx.strokeText(text, x, y)
 }
 
+function addListeners() {
+    addMouseListeners()
+    addTouchListeners()
+    window.addEventListener('resize', () => {
+        resizeCanvas()
+        renderMeme()
+    })
+}
+
+function addMouseListeners() {
+    gElCanvas.addEventListener('mousedown', onDown)
+    gElCanvas.addEventListener('mousemove', onMove)
+    gElCanvas.addEventListener('mouseup', onUp)
+}
+
+function addTouchListeners() {
+    gElCanvas.addEventListener('touchstart', onDown)
+    gElCanvas.addEventListener('touchmove', onMove)
+    gElCanvas.addEventListener('touchend', onUp)
+}
+
+function onDown(ev) {
+    getEvPos(ev)
+}
+
+function onMove(ev) {
+
+}
+
+function onUp() {
+
+}
+
+function getEvPos(ev) {
+
+    let pos = {
+        x: ev.offsetX,
+        y: ev.offsetY,
+    }
+
+    if (TOUCH_EVS.includes(ev.type)) {
+        // Prevent triggering the mouse ev
+        ev.preventDefault()
+        // Gets the first touch point
+        ev = ev.changedTouches[0]
+        // Calc the right pos according to the touch screen
+        pos = {
+            x: ev.pageX - ev.target.offsetLeft - ev.target.clientLeft,
+            y: ev.pageY - ev.target.offsetTop - ev.target.clientTop,
+        }
+    }
+    // console.log(pos);
+    return pos
+}
+
+function findClickedLineIdx(clickedPos) {
+
+}
+
 function onInputText(txt) {
     setLineText(txt)
+    renderMeme()
+}
+
+function onAddLine() {
+    if (gLineCount > 7) return
+    const meme = getMeme()
+    const { lines } = meme
+    const line = {
+        txt: gMemeText[getRandomInt(0, 18)],
+        font: 'roboto-bold',
+        size: 40,
+        fill: 'white',
+        stroke: 'black',
+        isDrag: false,
+        y: gLineVerticalPoseight
+    }
+    gLineVerticalPoseight += 40
+    gLineCount++
+    lines.push(line)
     renderMeme()
 }
 
@@ -68,6 +142,22 @@ function resizeCanvas() {
     const elContainer = document.querySelector('.canvas-container')
     gElCanvas.width = elContainer.offsetWidth
     gElCanvas.height = elContainer.offsetHeight
+}
+
+function onSetFontIncrease() {
+    const meme = getMeme()
+    const line = meme.lines[0]
+    if (line.size > 100) return
+    line.size += 5
+    renderMeme()
+}
+
+function onSetFontDecrease() {
+    const meme = getMeme()
+    const line = meme.lines[0]
+    if (line.size <= 10) return
+    line.size -= 5
+    renderMeme()
 }
 
 function onSetStrokeColor(strokeColor) {

@@ -32,9 +32,25 @@
 
 .fa.stroke-color::before {
     content: "\f1fc";
-    color: black;
+    color: var(--clrPrimaryBase);
 }
+
 .fa.fill-color::before {
     content: "\f576";
-    color: black;
+    color: var(--clrPrimaryBase);
+}
+
+.fa.font-increase::before {
+    content: "\2b";
+    color: var(--clrPrimaryBase);
+}
+
+.fa.font-decrease::before {
+    content: "\f068";
+    color: var(--clrPrimaryBase);
+}
+
+.fa.add-line::before {
+    content: "\f055";
+    color: var(--clrPrimaryBase);
 }

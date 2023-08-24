@@ -12,7 +12,7 @@
     display: flex;
 }
 
-.flex-column {
+.column {
     flex-direction: column;
 }
 

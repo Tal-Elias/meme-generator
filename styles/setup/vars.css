@@ -7,5 +7,12 @@
     --clrTertiary: #87fdf3;
 
 
+    /* layout */
+    
+    --l: 1060px;
+    --m: 860px;
+    --s: 600px;
+    
+    --layout-padding: 20px;
     --headerHeight: 100px;
 }
