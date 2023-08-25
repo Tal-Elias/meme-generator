@@ -5,7 +5,6 @@ const STORAGE_KEY = 'memesDB'
 let gKeywordSearchCountMap = { 'funny': 12, 'cat': 16, 'baby': 2 }
 
 let gLine
-let gSelectedLineIdx = 0
 
 let gImgs = [
     { id: 1, url: 'img/1.jpg', keywords: ['funny', 'cat'] },
@@ -83,8 +82,8 @@ function getImg() {
 }
 
 function setLineText(txt) {
-    const { selectedLineIdx, lines } = gMeme
-    const line = lines[selectedLineIdx]
+    const { selectedLineIdx } = gMeme
+    const line = gMeme.lines[selectedLineIdx]
     line.txt = txt
 }
 
@@ -93,5 +92,5 @@ function setImg(id) {
 }
 
 function setSelectedLineIdx(idx) {
-    gSelectedLineIdx = idx
+    gMeme.selectedLineIdx = idx
 }

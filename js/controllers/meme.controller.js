@@ -27,22 +27,10 @@ function renderMeme() {
         drawText(line, line.pos.x, line.pos.y)
         setTextMetrics(line.txt, line)
         if (idx === selectedLineIdx) {
-            document.querySelector('.text-input').placeholder = ''
-            document.querySelector('.text-input').value = line.txt
+            document.querySelector('.text-input').placeholder = line.txt
+            drawFrameAroundLine(line)
         }
     })
-}
-
-function drawText(line, x, y) {
-    gCtx.lineWidth = 2
-    gCtx.strokeStyle = line.stroke
-    gCtx.fillStyle = line.fill
-    gCtx.font = `${line.size}px ${line.font}`
-    gCtx.textAlign = 'center'
-    gCtx.textBaseline = 'middle'
-
-    gCtx.fillText(line.txt, x, y)
-    gCtx.strokeText(line.txt, x, y)
 }
 
 function addListeners() {
@@ -66,26 +54,73 @@ function addTouchListeners() {
     gElCanvas.addEventListener('touchend', onUp)
 }
 
+function drawText(line, x, y) {
+    gCtx.lineWidth = 2
+    gCtx.strokeStyle = line.stroke
+    gCtx.fillStyle = line.fill
+    gCtx.font = `${line.size}px ${line.font}`
+    gCtx.textAlign = 'center'
+    gCtx.textBaseline = 'middle'
+
+    gCtx.fillText(line.txt, x, y)
+    gCtx.strokeText(line.txt, x, y)
+}
+
+function findClickedLine(clickPos) {
+    const meme = getMeme()
+    let clickedLineIdx = -1
+
+    meme.lines.forEach((line, idx) => {
+        const textWidth = line.length
+        const lineHeight = line.size
+
+        const lineLeft = line.pos.x - textWidth / 2
+        const lineRight = line.pos.x + textWidth / 2
+        const lineTop = line.pos.y - lineHeight / 2
+        const lineBottom = line.pos.y + lineHeight / 2
+
+        if (
+            clickPos.x >= lineLeft && clickPos.x <= lineRight &&
+            clickPos.y >= lineTop && clickPos.y <= lineBottom
+        ) {
+            clickedLineIdx = idx
+        }
+    })
+    return clickedLineIdx
+}
+
+function drawFrameAroundLine(line) {
+    gCtx.strokeStyle = 'black'
+    gCtx.lineWidth = 3
+    gCtx.strokeRect(
+        line.pos.x - line.length / 2,
+        line.pos.y - line.size / 2,
+        line.length,
+        line.size
+    )
+}
+
 function onDown(ev) {
     const res = getEvPos(ev)
     const clickedLineIdx = findClickedLine(res)
     setSelectedLineIdx(clickedLineIdx)
-
-    if (clickedLineIdx !== -1) {
-        const meme = getMeme()
-        const selectedLine = meme.lines[clickedLineIdx]
+    const meme = getMeme()
+    const selectedLine = meme.lines[clickedLineIdx]
+    if (selectedLine) {
         selectedLine.isDrag = true
         gStartPos = { x: res.x, y: res.y }
         const elInput = document.querySelector('.text-input')
         elInput.value = selectedLine.txt
         elInput.placeholder = selectedLine.txt
     }
+    renderMeme()
 }
 
 function onMove(ev) {
     const res = getEvPos(ev)
     const meme = getMeme()
-    const selectedLine = meme.lines[gSelectedLineIdx]
+    const { selectedLineIdx } = meme
+    const selectedLine = meme.lines[selectedLineIdx]
 
     if (selectedLine && selectedLine.isDrag) {
         const dx = res.x - gStartPos.x
@@ -101,7 +136,8 @@ function onMove(ev) {
 
 function onUp() {
     const meme = getMeme()
-    const selectedLine = meme.lines[gSelectedLineIdx]
+    const { selectedLineIdx } = meme
+    const selectedLine = meme.lines[selectedLineIdx]
     if (selectedLine) {
         selectedLine.isDrag = false
     }
@@ -130,10 +166,6 @@ function onInputText(txt) {
     renderMeme()
 }
 
-function updateInputText() {
-
-}
-
 function onAddLine() {
     if (gLineCount >= 10) return
     if (!gLineCount) {
@@ -158,18 +190,37 @@ function onAddLine() {
 }
 
 function switchLine() {
+    const meme = getMeme()
+    const { selectedLineIdx, lines } = meme
 
+    const nextLineIdx = (selectedLineIdx + 1) % lines.length
+    setSelectedLineIdx(nextLineIdx)
+
+    const selectedLine = lines[nextLineIdx]
+    const elInput = document.querySelector('.text-input')
+    elInput.value = selectedLine.txt
+    elInput.placeholder = selectedLine.txt
+
+    renderMeme()
 }
 
 function removeLine() {
     if (!gLineCount) return
     const meme = getMeme()
-    if (gSelectedLineIdx !== -1) {
-        meme.lines.splice(gSelectedLineIdx, 1)
-        gSelectedLineIdx = -1
+    let { selectedLineIdx } = meme
+    if (selectedLineIdx !== -1) {
+        meme.lines.splice(selectedLineIdx, 1)
+        selectedLineIdx = -1
         renderMeme()
         gLineCount--
     }
+}
+
+function toggleMemeGenerator() {
+    const editor = document.querySelector('.main-content')
+    const gallery = document.querySelector('.gallery')
+    editor.classList.remove('hide')
+    gallery.classList.add('hide')
 }
 
 function toggleGallery() {
@@ -181,6 +232,7 @@ function toggleGallery() {
     } else {
         editor.classList.add('hide')
         gallery.classList.remove('hide')
+        renderMeme()
     }
 }
 
@@ -192,7 +244,8 @@ function resizeCanvas() {
 
 function onSetFontIncrease() {
     const meme = getMeme()
-    const line = meme.lines[gSelectedLineIdx]
+    const { selectedLineIdx } = meme
+    const line = meme.lines[selectedLineIdx]
     if (line.size > 100) return
     line.size += 5
     renderMeme()
@@ -200,7 +253,8 @@ function onSetFontIncrease() {
 
 function onSetFontDecrease() {
     const meme = getMeme()
-    const line = meme.lines[gSelectedLineIdx]
+    const { selectedLineIdx } = meme
+    const line = meme.lines[selectedLineIdx]
     if (line.size <= 10) return
     line.size -= 5
     renderMeme()
@@ -208,14 +262,16 @@ function onSetFontDecrease() {
 
 function onSetStrokeColor(strokeColor) {
     const meme = getMeme()
-    const line = meme.lines[gSelectedLineIdx]
+    const { selectedLineIdx } = meme
+    const line = meme.lines[selectedLineIdx]
     line.stroke = strokeColor
     renderMeme()
 }
 
 function onSetFillColor(fillColor) {
     const meme = getMeme()
-    const line = meme.lines[gSelectedLineIdx]
+    const { selectedLineIdx } = meme
+    const line = meme.lines[selectedLineIdx]
     line.fill = fillColor
     renderMeme()
 }
@@ -229,27 +285,4 @@ function onDownloadCanvas(elLink) {
 function setTextMetrics(txt, line) {
     const textMetrics = gCtx.measureText(txt)
     line.length = textMetrics.width
-}
-
-function findClickedLine(clickPos) {
-    const meme = getMeme()
-    let clickedLineIdx = -1
-
-    meme.lines.forEach((line, idx) => {
-        const textWidth = line.length
-        const lineHeight = line.size
-
-        const lineLeft = line.pos.x - textWidth / 2
-        const lineRight = line.pos.x + textWidth / 2
-        const lineTop = line.pos.y - lineHeight / 2
-        const lineBottom = line.pos.y + lineHeight / 2
-
-        if (
-            clickPos.x >= lineLeft && clickPos.x <= lineRight &&
-            clickPos.y >= lineTop && clickPos.y <= lineBottom
-        ) {
-            clickedLineIdx = idx
-        }
-    })
-    return clickedLineIdx
 }

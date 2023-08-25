@@ -12,7 +12,7 @@
 
     <header class="main-header">
         <nav class="main-nav-container flex space-between align-center">
-            <div class="logo" onclick="location.reload()">Memegen</div>
+            <div class="logo" onclick="toggleMemeGenerator()">Memegen</div>
             <div class="main-nav">
                 <ul class="clean-list grid flow-column">
                     <li><a href="#" class="btn-gallery" onclick="toggleGallery()">Gallery</a></li>
@@ -24,7 +24,7 @@
         </nav>
     </header>
 
-    <main class="main-content">
+    <main class="main-content hide">
         <div class="canvas-container flex justify-center">
             <canvas width="450" height="450"></canvas>
         </div>
@@ -54,9 +54,11 @@
 
     </main>
 
-    <section class="gallery hide">
-        <div class="gallery-container">
+    <section class="gallery">
+        <div class="search-bar">
+            <input type="text" class="text-input" placeholder="Search here...">
         </div>
+        <div class="gallery-container"></div>
     </section>
 
     <footer class="main-footer">

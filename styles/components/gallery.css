@@ -4,8 +4,6 @@
     padding-top: 80px;
 }
 
-.gallery-container {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    gap: 10px;
+.gallery .text-input {
+    margin-block-end: 1em;
 }

@@ -3,16 +3,6 @@
     width: 450px;
 }
 
-.meme-editor .text-input {
-    border-radius: 2em;
-    height: 4em;
-    text-align: center;
-}
-
-.meme-editor .text-input::placeholder {
-    font-size: 1.3rem;
-}
-
 .meme-editor .download {
     background-color: rgb(0, 47, 255);
 }

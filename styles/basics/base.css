@@ -47,3 +47,10 @@ input[type="color"] {
     transform: translate(-50%, -50%);
     opacity: 0;
 }
+
+input[type="text"] {
+    border-radius: 2em;
+    height: 1.5em;
+    text-align: center;
+    font-size: 1.7rem;
+}
