@@ -3,15 +3,16 @@
 function renderGallery() {
     let imgs = getImgs()
     let strHTMLs = imgs.map(img => `
-    <img src="./img/${img.id}.jpg" alt="" id="${img.id}" onclick="onImgSelect(this)">
+    <img src="./img/${img.id}.jpg" alt="" onclick="onImgSelect(${img.id})">
     `)
     document.querySelector('.gallery-container').innerHTML = strHTMLs.join('')
 }
 
-function onImgSelect(img) {
-    const {id} = img
+function onImgSelect(id) {
+    const meme = getMeme()
+    const { lines } = meme
+    if (!lines.length) addLine()
     setImgById(id)
-    renderMeme()
     toggleGallery()
 }
 

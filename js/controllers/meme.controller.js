@@ -18,20 +18,26 @@ function onInit() {
 }
 
 function renderMeme() {
-    const { selectedImgId, lines, selectedLineIdx } = getMeme()
-    const { url } = getImgs()[selectedImgId]
+    const meme = getMeme()
+    const { selectedImgId, lines, selectedLineIdx } = meme
+    const imgs = getImgs()
+    const selectedImg = imgs.find(img => img.id === selectedImgId + 1)
+    if (!selectedImg) return
+    const { url } = selectedImg
     const elImg = new Image()
     elImg.src = url
-    gCtx.drawImage(elImg, 0, 0, gElCanvas.width, gElCanvas.height)
-
-    lines.forEach((line, idx) => {
-        drawText(line, line.pos.x, line.pos.y)
-        setTextMetrics(line.txt, line)
-        if (idx === selectedLineIdx) {
-            document.querySelector('.text-input').placeholder = line.txt
-            drawFrameAroundLine(line)
-        }
-    })
+    elImg.onload = () => {
+        gCtx.drawImage(elImg, 0, 0, gElCanvas.width, gElCanvas.height)
+        lines.forEach((line, idx) => {
+            drawText(line, line.pos.x, line.pos.y)
+            setTextMetrics(line.txt, line)
+            if (idx === selectedLineIdx) {
+                // document.querySelector('.text-input').placeholder = line.txt
+                setCurrLangPlaceHolders(line)
+                drawFrameAroundLine(line)
+            }
+        })
+    }
 }
 
 function addListeners() {
@@ -94,10 +100,10 @@ function drawFrameAroundLine(line) {
     gCtx.strokeStyle = 'black'
     gCtx.lineWidth = 3
     gCtx.strokeRect(
-        line.pos.x - line.length / 2,
-        line.pos.y - line.size / 2,
-        line.length,
-        line.size
+        (line.pos.x - 10) - line.length / 2,
+        (line.pos.y - 10) - line.size / 2,
+        line.length + 20,
+        line.size + 15
     )
 }
 
@@ -173,18 +179,9 @@ function onAddLine() {
     if (!lines.length) {
         gLineVerticalPos = 50
     }
-    const line = {
-        txt: 'Input Text Here',
-        font: 'roboto-bold',
-        size: 40,
-        fill: 'white',
-        stroke: 'black',
-        isDrag: false,
-        pos: { x: 450 / 2, y: gLineVerticalPos }
-    }
+    addLine()
     gLineVerticalPos += 5
     gLineCount = lines.length + 1
-    lines.push(line)
     renderMeme()
 }
 
@@ -205,14 +202,10 @@ function onSwitchLine() {
 
 function onRemoveLine() {
     const meme = getMeme()
-    let { selectedLineIdx, lines } = meme
-    if (!lines.length) return
-    if (selectedLineIdx !== -1) {
-        meme.lines.splice(selectedLineIdx, 1)
-        selectedLineIdx = 0
-        renderMeme()
-    }
+    let { lines } = meme
+    removeLine()
     gLineCount = lines.length
+    renderMeme()
 }
 
 function toggleMemeGenerator() {
@@ -244,36 +237,37 @@ function resizeCanvas() {
 }
 
 function onSetFontIncrease() {
-    const meme = getMeme()
-    const { selectedLineIdx } = meme
-    const line = meme.lines[selectedLineIdx]
-    if (line.size > 100) return
-    line.size += 5
+    SetFontIncrease()
     renderMeme()
 }
 
 function onSetFontDecrease() {
-    const meme = getMeme()
-    const { selectedLineIdx } = meme
-    const line = meme.lines[selectedLineIdx]
-    if (line.size <= 10) return
-    line.size -= 5
+    SetFontDecrease()
+    renderMeme()
+}
+
+function onSetAlignLeft() {
+    setAlignLeft()
+    renderMeme()
+}
+
+function onSetAlignCenter() {
+    setAlignCenter()
+    renderMeme()
+}
+
+function onSetAlignRight() {
+    setAlignRight()
     renderMeme()
 }
 
 function onSetStrokeColor(strokeColor) {
-    const meme = getMeme()
-    const { selectedLineIdx } = meme
-    const line = meme.lines[selectedLineIdx]
-    line.stroke = strokeColor
+    setStrokeColor(strokeColor)
     renderMeme()
 }
 
 function onSetFillColor(fillColor) {
-    const meme = getMeme()
-    const { selectedLineIdx } = meme
-    const line = meme.lines[selectedLineIdx]
-    line.fill = fillColor
+    setFillColor(fillColor)
     renderMeme()
 }
 
@@ -286,4 +280,31 @@ function onDownloadCanvas(elLink) {
 function setTextMetrics(txt, line) {
     const textMetrics = gCtx.measureText(txt)
     line.length = textMetrics.width
+    return textMetrics.width
+}
+
+function onSetLang(lang) {
+    SetLang(lang)
+    if (lang === 'he') {
+        document.body.classList.add('rtl')
+    } else {
+        document.body.classList.remove('rtl')
+    }
+    setLinesCurrLang()
+    renderMeme()
+    doTrans()
+}
+
+function setCurrLangPlaceHolders(line) {
+    const currLang = getCurrLang()
+    if (currLang === 'he') {
+        document.querySelector('.text-input').placeholder = 'הכנס טקסט כאן'
+    } else {
+        document.querySelector('.text-input').placeholder = line.txt
+    }
+}
+
+function onSetFontFamily(font) {
+    setFontFamily(font)
+    renderMeme()
 }

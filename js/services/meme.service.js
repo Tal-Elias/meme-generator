@@ -7,12 +7,12 @@ let gFilterBy = { keywords: '' }
 let gKeywordSearchCountMap =
 {
     'funny': 12,
-    'cat': 16,
+    'cat': 4,
     'baby': 2,
-    'dog': 2,
-    'crazy': 2,
+    'dog': 6,
+    'crazy': 7,
     'children': 2,
-    'movies': 5
+    'movies': 16
 }
 
 let gImgs = [
@@ -111,6 +111,89 @@ function setImgById(id) {
     gMeme.selectedImgId = id - 1
 }
 
+function addLine() {
+    const { lines } = gMeme
+    const line = {
+        txt: 'Input Text Here',
+        font: 'roboto-bold',
+        size: 40,
+        fill: 'white',
+        stroke: 'black',
+        isDrag: false,
+        pos: { x: 450 / 2, y: gLineVerticalPos }
+    }
+    lines.push(line)
+}
+
+function removeLine() {
+    let { selectedLineIdx, lines } = gMeme
+    if (!lines.length) return
+    if (selectedLineIdx !== -1) {
+        gMeme.lines.splice(selectedLineIdx, 1)
+        selectedLineIdx = 0
+    }
+}
+
+function SetFontIncrease() {
+    const { selectedLineIdx } = gMeme
+    const line = gMeme.lines[selectedLineIdx]
+    if (line.size > 100) return
+    line.size += 5
+}
+
+function SetFontDecrease() {
+    const { selectedLineIdx } = gMeme
+    const line = gMeme.lines[selectedLineIdx]
+    if (line.size <= 10) return
+    line.size -= 5
+}
+
+function setAlignLeft() {
+    const { selectedLineIdx } = gMeme
+    const line = gMeme.lines[selectedLineIdx]
+    line.pos.x = 150
+}
+
+function setAlignCenter() {
+    const { selectedLineIdx } = gMeme
+    const line = gMeme.lines[selectedLineIdx]
+    line.pos.x = 225
+}
+
+function setAlignRight() {
+    const { selectedLineIdx } = gMeme
+    const line = gMeme.lines[selectedLineIdx]
+    line.pos.x = 300
+}
+
+function setFontFamily(font) {
+    const { lines } = gMeme
+    if (!lines.length) return
+    lines.forEach(line => line.font = font)
+}
+
+function setStrokeColor(strokeColor) {
+    const { selectedLineIdx } = gMeme
+    const line = gMeme.lines[selectedLineIdx]
+    line.stroke = strokeColor
+}
+
+function setFillColor(fillColor) {
+    const { selectedLineIdx } = gMeme
+    const line = gMeme.lines[selectedLineIdx]
+    line.fill = fillColor
+}
+
 function setSelectedLineIdx(idx) {
     gMeme.selectedLineIdx = idx
+}
+
+function setLinesCurrLang() {
+    const currLang = getCurrLang()
+    const { lines } = gMeme
+    if (currLang === 'he') {
+        lines.forEach(line => line.txt = 'הכנס טסקס כאן')
+    } else {
+        lines.forEach(line => line.txt = 'Input Text Here')
+    }
 }

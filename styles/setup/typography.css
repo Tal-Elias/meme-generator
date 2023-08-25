@@ -64,3 +64,18 @@
     content: "\f2ed";
     color: var(--clrPrimaryBase);
 }
+
+.fa.align-left::before {
+    content: "\f036";
+    color: var(--clrPrimaryBase);
+}
+
+.fa.align-right::before {
+    content: "\f038";
+    color: var(--clrPrimaryBase);
+}
+
+.fa.align-center::before {
+    content: "\f037";
+    color: var(--clrPrimaryBase);
+}
