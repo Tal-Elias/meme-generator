@@ -13,12 +13,13 @@ function onInit() {
     gLineVerticalPos = 90
     gLineCount = 2
     addListeners()
+    renderGallery()
     renderMeme()
 }
 
 function renderMeme() {
     const { selectedImgId, lines, selectedLineIdx } = getMeme()
-    const { url } = getImg()[selectedImgId]
+    const { url } = getImgs()[selectedImgId]
     const elImg = new Image()
     elImg.src = url
     gCtx.drawImage(elImg, 0, 0, gElCanvas.width, gElCanvas.height)
@@ -167,15 +168,13 @@ function onInputText(txt) {
 }
 
 function onAddLine() {
-    if (gLineCount >= 10) return
-    if (!gLineCount) {
-        gLineVerticalPos = 50
-        gLineCount = 0
-    }
     const meme = getMeme()
     const { lines } = meme
+    if (!lines.length) {
+        gLineVerticalPos = 50
+    }
     const line = {
-        txt: gMemeText[getRandomInt(0, 18)],
+        txt: 'Input Text Here',
         font: 'roboto-bold',
         size: 40,
         fill: 'white',
@@ -184,12 +183,12 @@ function onAddLine() {
         pos: { x: 450 / 2, y: gLineVerticalPos }
     }
     gLineVerticalPos += 5
-    gLineCount++
+    gLineCount = lines.length + 1
     lines.push(line)
     renderMeme()
 }
 
-function switchLine() {
+function onSwitchLine() {
     const meme = getMeme()
     const { selectedLineIdx, lines } = meme
 
@@ -204,16 +203,16 @@ function switchLine() {
     renderMeme()
 }
 
-function removeLine() {
-    if (!gLineCount) return
+function onRemoveLine() {
     const meme = getMeme()
-    let { selectedLineIdx } = meme
+    let { selectedLineIdx, lines } = meme
+    if (!lines.length) return
     if (selectedLineIdx !== -1) {
         meme.lines.splice(selectedLineIdx, 1)
-        selectedLineIdx = -1
+        selectedLineIdx = 0
         renderMeme()
-        gLineCount--
     }
+    gLineCount = lines.length
 }
 
 function toggleMemeGenerator() {
@@ -221,6 +220,7 @@ function toggleMemeGenerator() {
     const gallery = document.querySelector('.gallery')
     editor.classList.remove('hide')
     gallery.classList.add('hide')
+    renderMeme()
 }
 
 function toggleGallery() {
@@ -229,6 +229,7 @@ function toggleGallery() {
     if (editor.classList.contains('hide')) {
         editor.classList.remove('hide')
         gallery.classList.add('hide')
+        renderMeme()
     } else {
         editor.classList.add('hide')
         gallery.classList.remove('hide')
