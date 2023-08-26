@@ -1,5 +1,7 @@
 'use strict'
 
+// WIP
+
 const STORAGE_KEY = 'memesDB'
 
 function loadMemes() {

@@ -15,7 +15,6 @@ function onInit() {
     addListeners()
     // resizeCanvas()
     renderGallery()
-    renderCanvas()
     renderMeme()
 }
 
@@ -41,17 +40,11 @@ function renderMeme() {
     }
 }
 
-function renderCanvas() {
-    gCtx.fillRect(0, 0, gElCanvas.width, gElCanvas.height)
-
-  }
-
 function addListeners() {
     addMouseListeners()
     addTouchListeners()
     window.addEventListener('resize', () => {
         // resizeCanvas()
-        renderCanvas()
         renderMeme()
     })
 }
@@ -328,9 +321,11 @@ function toggleMenu() {
 function onReadAbout() {
     document.querySelector('.dialog').showModal()
 }
+
 function closeModal() {
     document.querySelector('.dialog').close()
 }
+
 function onClickOutside(ev, elDialog) {
     const dialogDimensions = elDialog.getBoundingClientRect()
     if (ev.clientX < dialogDimensions.left ||

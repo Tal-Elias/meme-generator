@@ -193,7 +193,7 @@ function setLinesCurrLang() {
     const currLang = getCurrLang()
     const { lines } = gMeme
     if (currLang === 'he') {
-        lines.forEach(line => line.txt = 'הכנס טסקס כאן')
+        lines.forEach(line => line.txt = 'הכנס טקסט כאן')
     } else {
         lines.forEach(line => line.txt = 'Input Text Here')
     }
