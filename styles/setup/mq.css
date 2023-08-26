@@ -7,7 +7,7 @@
 
     .main-header .main-nav {
         position: fixed;
-        top: 90px;
+        top: 100px;
         left: 0;
 
         width: 100%;
@@ -17,6 +17,7 @@
         overflow: hidden;
         transition: grid-template-rows 1s;
         align-items: end;
+        border-radius: 10px;
     }
 
     body.menu-open .main-nav {
@@ -33,25 +34,17 @@
     .main-header .main-nav li {
         border-bottom: 1px solid #ccc;
     }
-
-    .meme-editor {
-        margin-block-start: 3em;
-    }
 }
 
 /* SMALL */
 @media (min-width: 660px) {
-    /* .main-layout {
+    .main-layout {
         grid-template-columns:
             minmax(var(--layout-padding), 1fr) minmax(auto, var(--s)) minmax(var(--layout-padding), 1fr);
-    } */
+    }
 
     .btn-toggle-menu {
         display: none;
-    }
-
-    .meme-editor {
-        margin-block-start: 3em;
     }
 }
 
@@ -75,7 +68,15 @@
     }
 
     .editor {
-        grid-template-columns: 1fr 1fr;
-        gap: 40px;
+        display: grid;
+        grid-template-columns: 450px 1fr;
+        grid-template-rows: 450px;
+        gap: 60px;
+    }
+
+    .canvas-container {
+        min-width: 450px;
+        min-height: 450px;
+        margin-block-end: 0;
     }
 }

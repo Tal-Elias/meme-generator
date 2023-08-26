@@ -1,4 +1,7 @@
 .canvas-container {
+    max-width: 450px;
+    max-height: 450px;
+    margin-block-end: 4em;
     border-radius: 10px;
     box-shadow:
         0 0 20px 10px rgba(128, 0, 128, 0.3),

@@ -15,6 +15,7 @@ function onInit() {
     addListeners()
     resizeCanvas()
     renderGallery()
+    renderCanvas()
     renderMeme()
 }
 
@@ -33,7 +34,6 @@ function renderMeme() {
             drawText(line, line.pos.x, line.pos.y)
             setTextMetrics(line.txt, line)
             if (idx === selectedLineIdx) {
-                // document.querySelector('.text-input').placeholder = line.txt
                 setCurrLangPlaceHolders(line)
                 drawFrameAroundLine(line)
             }
@@ -41,11 +41,17 @@ function renderMeme() {
     }
 }
 
+function renderCanvas() {
+    gCtx.fillRect(0, 0, gElCanvas.width, gElCanvas.height)
+
+  }
+
 function addListeners() {
     addMouseListeners()
     addTouchListeners()
     window.addEventListener('resize', () => {
-        resizeCanvas()
+        // resizeCanvas()
+        renderCanvas()
         renderMeme()
     })
 }

@@ -1,9 +1,7 @@
 .main-header {
-    /* grid-column: 2; */
-    /* margin-block-start: 1em; */
     border-radius: 10px;
     background-color: var(--clrSecondary);
-    margin: 0 1em;
+    margin: .7em 1em;
 }
 
 .main-header a {
