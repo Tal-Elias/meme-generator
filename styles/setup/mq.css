@@ -7,7 +7,7 @@
 
     .main-header .main-nav {
         position: fixed;
-        top: 100px;
+        top: 90px;
         left: 0;
 
         width: 100%;
@@ -46,6 +46,18 @@
     .btn-toggle-menu {
         display: none;
     }
+
+    .main-header select {
+        top: 8em;
+    }
+
+    .meme-editor .edit-buttons {
+        grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    }
+
+    input[type="text"] {
+        font-size: 1.7rem;
+    }
 }
 
 /* MEDIUM */
@@ -53,6 +65,18 @@
     .main-layout {
         grid-template-columns:
             minmax(var(--layout-padding), 1fr) minmax(auto, var(--m)) minmax(var(--layout-padding), 1fr);
+    }
+
+    .gallery-container {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+    }
+
+    .main-header select {
+        position: static;
+        margin-inline-start: 1em;
+        margin-inline-end: auto;
+        padding: 10px 15px;
     }
 }
 

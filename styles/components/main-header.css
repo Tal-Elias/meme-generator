@@ -20,5 +20,7 @@
 }
 
 .main-header select {
+    position: absolute;
+    top: 6em;
     padding: 10px 15px;
 }

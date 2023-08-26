@@ -18,6 +18,7 @@
 @import url('./components/main-footer.css');
 @import url('./components/gallery.css');
 @import url('./components/gallery-container.css');
+@import url('./components/dialog.css');
 
 /* MEDIA QUERIES */
 @import url('./setup/mq.css');

@@ -198,3 +198,7 @@ function setLinesCurrLang() {
         lines.forEach(line => line.txt = 'Input Text Here')
     }
 }
+
+function saveMemesToStorage() {
+    saveToStorage(STORAGE_KEY, gMeme)
+}

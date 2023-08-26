@@ -21,14 +21,14 @@
                 <ul class="clean-list grid flow-column">
                     <li><a href="#" data-trans="link-gallery" class="link-gallery" onclick="toggleGallery()">Gallery</a></li>
                     <li><a href="#" data-trans="link-saved" class="link-saved">Saved</a></li>
-                    <li><a href="#" data-trans="link-about" class="link-about">About</a></li>
+                    <li><a href="#" data-trans="link-about" class="link-about" onclick="onReadAbout()">About</a></li>
                 </ul>
             </div>
             <button class="btn-toggle-menu" onclick="toggleMenu()">☰</button>
         </nav>
     </header>
 
-    <main class="main-content">
+    <main class="main-content hide">
         <div class="editor">
             <div class="canvas-container">
                 <canvas width="450" height="450"></canvas>
@@ -49,6 +49,7 @@
                     <select onchange="onSetFontFamily(this.value)">
                         <option data-trans="choose-font" value="">Choose Font</option>
                         <option value="Impact">Impact</option>
+                        <option value="Arial">Arial</option>
                     </select>
                     <button class="btn stroke-color fa">
                         <input type="color" oninput="onSetStrokeColor(this.value)">
@@ -58,6 +59,7 @@
                     </button>
                 </div>
                 <div class="user-buttons">
+                    <!-- <a data-trans="save" class="btn save fa" onclick="onSaveMeme()">Save</a> -->
                     <a data-trans="download" class="btn download fa" onclick="onDownloadCanvas(this)">Download</a>
                     <button data-trans="share" class="btn share fa" onclick="onUploadImg()">Share</button>
                 </div>
@@ -65,7 +67,7 @@
         </div>
     </main>
 
-    <section class="gallery hide">
+    <section class="gallery">
         <div class="search-bar">
             <input type="text" data-trans="search-placeholder" class="text-input"
                 oninput="onSetFilterBy({keywords:this.value})" placeholder="Search here...">
@@ -76,6 +78,14 @@
     <footer class="main-footer">
 
     </footer>
+
+    <dialog class="dialog" onclick="onClickOutside(event, this)">
+        <h2>About me</h2>
+        <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Repellat enim ex impedit, necessitatibus soluta vero amet laudantium, accusamus at nisi fuga, odio facere! Ratione nobis libero aliquid enim itaque harum.</p>
+        <div class="modal-btn-container">
+            <button class="btn round" onclick="closeModal()">Close</button>
+        </div>
+    </dialog>
 
     <script src="./js/services/util.js"></script>
     <script src="./js/services/storage.service.js"></script>

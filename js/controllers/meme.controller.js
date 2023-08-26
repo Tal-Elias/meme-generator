@@ -13,7 +13,7 @@ function onInit() {
     gLineVerticalPos = 90
     gLineCount = 2
     addListeners()
-    resizeCanvas()
+    // resizeCanvas()
     renderGallery()
     renderCanvas()
     renderMeme()
@@ -222,6 +222,7 @@ function toggleMemeGenerator() {
     const gallery = document.querySelector('.gallery')
     editor.classList.remove('hide')
     gallery.classList.add('hide')
+    document.body.classList.remove('menu-open')
     renderMeme()
 }
 
@@ -231,10 +232,12 @@ function toggleGallery() {
     if (editor.classList.contains('hide')) {
         editor.classList.remove('hide')
         gallery.classList.add('hide')
+        document.body.classList.remove('menu-open')
         renderMeme()
     } else {
         editor.classList.add('hide')
         gallery.classList.remove('hide')
+        document.body.classList.remove('menu-open')
         renderMeme()
     }
 }
@@ -320,4 +323,25 @@ function onSetFontFamily(font) {
 
 function toggleMenu() {
     document.body.classList.toggle('menu-open')
+}
+
+function onReadAbout() {
+    document.querySelector('.dialog').showModal()
+}
+function closeModal() {
+    document.querySelector('.dialog').close()
+}
+function onClickOutside(ev, elDialog) {
+    const dialogDimensions = elDialog.getBoundingClientRect()
+    if (ev.clientX < dialogDimensions.left ||
+        ev.clientX > dialogDimensions.right ||
+        ev.clientY < dialogDimensions.up ||
+        ev.clientY > dialogDimensions.left
+    ) {
+        elDialog.close()
+    }
+}
+
+function onSaveMeme() {
+    saveMemesToStorage()
 }

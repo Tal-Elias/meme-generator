@@ -1,0 +1,17 @@
+.dialog {
+    text-align: center;
+}
+
+.dialog::backdrop {
+    background-color: var(--clrPrimaryBase);
+    backdrop-filter: blur(2px);
+}
+
+.dialog .modal-btn-container {
+    margin-top: 2em;
+}
+
+.dialog .btn {
+    margin-inline-start: 1em;
+    background-color: black;
+}
