@@ -1,24 +1,26 @@
 .main-header {
-    grid-column: 2;
-    min-height: var(--headerHeight);
-    margin-block-start: 1em;
+    /* grid-column: 2; */
+    /* margin-block-start: 1em; */
     border-radius: 10px;
     background-color: var(--clrSecondary);
+    margin: 0 1em;
 }
 
-.main-header li {
+.main-header a {
     /* position: relative; */
     display: grid;
     justify-content: center;
     align-items: center;
-    margin-inline-end: .8em;
+    /* margin-inline-end: .8em; */
 
     min-width: var(--headerHeight);
     min-height: var(--headerHeight);
-
 }
 
-.main-header a {
-    font-size: 1.4rem;
-    color: var(--clrTertiary);
+.main-header a:hover {
+    color: greenyellow;
+}
+
+.main-header select {
+    padding: 10px 15px;
 }

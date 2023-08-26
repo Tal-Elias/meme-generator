@@ -24,6 +24,8 @@ img {
 a {
     font-family: roboto-bold, sans-serif;
     text-decoration: none;
+    font-size: 1.4rem;
+    color: var(--clrTertiary);
 }
 
 .btn {

@@ -6,18 +6,12 @@
     grid-template-columns: var(--layout-padding) 1fr var(--layout-padding);
 }
 
-/* .main-layout > *:not(.full) {
+.main-layout > *:not(.full) {
     grid-column: 2;
 }
 
 .main-layout > *.full {
     grid-column: 1 / -1;
-} */
-
-.main-content {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 40px;
 }
 
 /* GALLERY */

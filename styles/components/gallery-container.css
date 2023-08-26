@@ -5,6 +5,7 @@
 .gallery-container img {
     cursor: pointer;
     border-radius: 10px;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
     transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
 }
 

@@ -34,6 +34,10 @@ const gTrans = {
     'search-placeholder': {
         en: 'Search here...',
         he: 'חפש כאן...'
+    },
+    'choose-font': {
+        en: 'Choose Font',
+        he: 'בחר פונט'
     }
 }
 

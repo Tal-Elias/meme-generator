@@ -120,7 +120,7 @@ function addLine() {
         fill: 'white',
         stroke: 'black',
         isDrag: false,
-        pos: { x: 450 / 2, y: gLineVerticalPos }
+        pos: { x: gElCanvas.width / 2, y: gLineVerticalPos }
     }
     lines.push(line)
 }
@@ -169,7 +169,8 @@ function setAlignRight() {
 function setFontFamily(font) {
     const { lines } = gMeme
     if (!lines.length) return
-    lines.forEach(line => line.font = font)
+    if (font) lines.forEach(line => line.font = font)
+    else lines.forEach(line => line.font = 'roboto-bold')
 }
 
 function setStrokeColor(strokeColor) {

@@ -10,7 +10,7 @@
 
 <body class="main-layout" onload="onInit()">
 
-    <header class="main-header">
+    <header class="main-header full main-layout">
         <nav class="main-nav-container flex space-between align-center">
             <div data-trans="logo" class="logo" onclick="toggleMemeGenerator()">Memegen</div>
             <select onchange="onSetLang(this.value)">
@@ -19,55 +19,57 @@
             </select>
             <div class="main-nav">
                 <ul class="clean-list grid flow-column">
-                    <li><a href="#" data-trans="link-gallery" class="link-gallery" onclick="toggleGallery()">Gallery</a></li>
+                    <li><a href="#" data-trans="link-gallery" class="link-gallery" onclick="toggleGallery()">Gallery</a>
+                    </li>
                     <li><a href="#" data-trans="link-saved" class="link-saved">Saved</a></li>
                     <li><a href="#" data-trans="link-about" class="link-about">About</a></li>
                 </ul>
             </div>
-            <!-- <button class="btn-toggle-menu" onclick="toggleMenu()">☰</button> -->
+            <button class="btn-toggle-menu" onclick="toggleMenu()">☰</button>
         </nav>
     </header>
 
-    <main class="main-content hide">
-        <div class="canvas-container flex justify-center">
-            <canvas width="450" height="450"></canvas>
+    <main class="main-content">
+        <div class="editor">
+            <div class="canvas-container">
+                <canvas width="450" height="450"></canvas>
+            </div>
+            <section class="meme-editor flex column align-center">
+                <input class="text-input" type="text" oninput="onInputText(this.value)">
+                <div class="edit-lines">
+                    <button class="btn add-line fa" onclick="onAddLine()"></button>
+                    <button class="btn switch-line fa" onclick="onSwitchLine()"></button>
+                    <button class="btn remove-line fa" onclick="onRemoveLine()"></button>
+                </div>
+                <div class="edit-buttons">
+                    <button class="btn font-increase fa" onclick="onSetFontIncrease()"></button>
+                    <button class="btn font-decrease fa" onclick="onSetFontDecrease()"></button>
+                    <button class="btn align-left fa" onclick="onSetAlignLeft()"></button>
+                    <button class="btn align-center fa" onclick="onSetAlignCenter()"></button>
+                    <button class="btn align-right fa" onclick="onSetAlignRight()"></button>
+                    <select onchange="onSetFontFamily(this.value)">
+                        <option data-trans="choose-font" value="">Choose Font</option>
+                        <option value="Impact">Impact</option>
+                    </select>
+                    <button class="btn stroke-color fa">
+                        <input type="color" oninput="onSetStrokeColor(this.value)">
+                    </button>
+                    <button class="btn fill-color fa">
+                        <input type="color" oninput="onSetFillColor(this.value)">
+                    </button>
+                </div>
+                <div class="user-buttons">
+                    <a data-trans="download" class="btn download fa" onclick="onDownloadCanvas(this)">Download</a>
+                    <button data-trans="share" class="btn share fa" onclick="onUploadImg()">Share</button>
+                </div>
+            </section>
         </div>
-
-        <section class="meme-editor flex column">
-            <input class="text-input" type="text" oninput="onInputText(this.value)">
-            <div class="edit-lines">
-                <button class="btn add-line fa" onclick="onAddLine()"></button>
-                <button class="btn switch-line fa" onclick="onSwitchLine()"></button>
-                <button class="btn remove-line fa" onclick="onRemoveLine()"></button>
-            </div>
-            <div class="edit-buttons">
-                <button class="btn font-increase fa" onclick="onSetFontIncrease()"></button>
-                <button class="btn font-decrease fa" onclick="onSetFontDecrease()"></button>
-                <button class="btn align-left fa" onclick="onSetAlignLeft()"></button>
-                <button class="btn align-center fa" onclick="onSetAlignCenter()"></button>
-                <button class="btn align-right fa" onclick="onSetAlignRight()"></button>
-                <select onchange="onSetFontFamily(this.value)">
-                    <option value="">Choose Font</option>
-                    <option value="Impact">Impact</option>
-                </select>
-                <button class="btn stroke-color fa">
-                    <input type="color" oninput="onSetStrokeColor(this.value)">
-                </button>
-                <button class="btn fill-color fa">
-                    <input type="color" oninput="onSetFillColor(this.value)">
-                </button>
-            </div>
-            <div class="user-buttons">
-                <a data-trans="download" class="btn download fa" onclick="onDownloadCanvas(this)">Download</a>
-                <button data-trans="share" class="btn share fa" onclick="onUploadImg()">Share</button>
-            </div>
-        </section>
-
     </main>
 
-    <section class="gallery">
+    <section class="gallery hide">
         <div class="search-bar">
-            <input type="text" data-trans="search-placeholder" class="text-input" oninput="onSetFilterBy({keywords:this.value})" placeholder="Search here...">
+            <input type="text" data-trans="search-placeholder" class="text-input"
+                oninput="onSetFilterBy({keywords:this.value})" placeholder="Search here...">
         </div>
         <div class="gallery-container"></div>
     </section>

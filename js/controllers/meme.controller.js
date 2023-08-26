@@ -13,6 +13,7 @@ function onInit() {
     gLineVerticalPos = 90
     gLineCount = 2
     addListeners()
+    resizeCanvas()
     renderGallery()
     renderMeme()
 }
@@ -119,6 +120,7 @@ function onDown(ev) {
         const elInput = document.querySelector('.text-input')
         elInput.value = selectedLine.txt
         elInput.placeholder = selectedLine.txt
+        document.querySelector('canvas').style.cursor = 'grabbing'
     }
     renderMeme()
 }
@@ -147,6 +149,7 @@ function onUp() {
     const selectedLine = meme.lines[selectedLineIdx]
     if (selectedLine) {
         selectedLine.isDrag = false
+        document.querySelector('canvas').style.cursor = 'grab'
     }
 }
 
@@ -307,4 +310,8 @@ function setCurrLangPlaceHolders(line) {
 function onSetFontFamily(font) {
     setFontFamily(font)
     renderMeme()
+}
+
+function toggleMenu() {
+    document.body.classList.toggle('menu-open')
 }

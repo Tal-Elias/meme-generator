@@ -12,19 +12,19 @@
     display: flex;
 }
 
-.column {
+.flex.column {
     flex-direction: column;
 }
 
-.justify-center {
+.flex.justify-center {
     justify-content: center;
 }
 
-.space-between {
+.flex.space-between {
     justify-content: space-between;
 }
 
-.align-center {
+.flex.align-center {
     align-items: center;
 }
 
@@ -33,6 +33,6 @@
     display: grid;
 }
 
-.flow-column {
+.grid.flow-column {
     grid-auto-flow: column;
 }

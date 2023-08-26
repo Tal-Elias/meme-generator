@@ -1,6 +1,11 @@
 .meme-editor {
+    align-self: center;
     gap: 20px;
-    width: 450px;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow:
+        0 0 20px 10px rgba(128, 0, 128, 0.3),
+        0 0 0 20px rgba(128, 0, 128, 0.1);
 }
 
 .meme-editor .download {
@@ -11,19 +16,19 @@
     background-color: rgb(0, 202, 78);
 }
 
-.meme-editor .edit-buttons .btn{
+.meme-editor .edit-buttons .btn {
     background-color: var(--clrPrimary-2);
 }
 
-.meme-editor .add-line{
+.meme-editor .add-line {
     background-color: greenyellow;
 }
 
-.meme-editor .switch-line{
+.meme-editor .switch-line {
     background-color: rgb(47, 179, 255);
 }
 
-.meme-editor .remove-line{
+.meme-editor .remove-line {
     background-color: rgb(255, 47, 47);
 }
 
