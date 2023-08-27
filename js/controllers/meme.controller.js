@@ -13,14 +13,18 @@ function onInit() {
     gLineVerticalPos = 90
     gLineCount = 2
     addListeners()
-    // resizeCanvas()
     renderGallery()
+    setKeywordsSize()
     renderMeme()
 }
 
 function renderMeme() {
     const meme = getMeme()
     const { selectedImgId, lines, selectedLineIdx } = meme
+
+    const elInput = document.querySelector('.text-input')
+    elInput.value = lines.length ? lines[0].txt : 'Add line first'
+
     const imgs = getImgs()
     const selectedImg = imgs.find(img => img.id === selectedImgId + 1)
     if (!selectedImg) return
@@ -28,6 +32,7 @@ function renderMeme() {
     const elImg = new Image()
     elImg.src = url
     elImg.onload = () => {
+        // resizeCanvas()
         gCtx.drawImage(elImg, 0, 0, gElCanvas.width, gElCanvas.height)
         lines.forEach((line, idx) => {
             drawText(line, line.pos.x, line.pos.y)
@@ -38,6 +43,12 @@ function renderMeme() {
             }
         })
     }
+}
+
+function resizeCanvas() {
+    const elContainer = document.querySelector('.canvas-container')
+    gElCanvas.width = elContainer.offsetWidth
+    gElCanvas.height = elContainer.offsetHeight
 }
 
 function addListeners() {
@@ -178,11 +189,10 @@ function onInputText(txt) {
 function onAddLine() {
     const meme = getMeme()
     const { lines } = meme
-    if (!lines.length) {
-        gLineVerticalPos = 50
-    }
+    if (!lines.length) gLineVerticalPos = 40
+
     addLine()
-    gLineVerticalPos += 5
+    gLineVerticalPos += 10
     gLineCount = lines.length + 1
     renderMeme()
 }
@@ -233,12 +243,6 @@ function toggleGallery() {
         document.body.classList.remove('menu-open')
         renderMeme()
     }
-}
-
-function resizeCanvas() {
-    const elContainer = document.querySelector('.canvas-container')
-    gElCanvas.width = elContainer.offsetWidth
-    gElCanvas.height = elContainer.offsetHeight
 }
 
 function onSetFontIncrease() {
@@ -315,12 +319,18 @@ function onSetFontFamily(font) {
 }
 
 function toggleMenu() {
+    const selectLang = document.querySelector('.main-header select')
+    selectLang.classList.toggle('hide')
     document.body.classList.toggle('menu-open')
 }
 
 function onReadAbout() {
     document.querySelector('.dialog').showModal()
 }
+
+//WIP
+// function onShowSaved() {
+// }
 
 function closeModal() {
     document.querySelector('.dialog').close()

@@ -51,7 +51,7 @@
 }
 
 .fa.add-line::before {
-    content: "\f055";
+    content: "\f0fe";
     color: var(--clrPrimaryBase);
 }
 

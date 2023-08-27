@@ -68,7 +68,7 @@ let gMeme = {
             fill: 'white',
             stroke: 'black',
             isDrag: false,
-            pos: { x: 450 / 2, y: 50 }
+            pos: { x: 390 / 2, y: 40 }
         },
         {
             txt: 'Input Text Here', //gMemeText[getRandomInt(0, 18)]
@@ -77,7 +77,7 @@ let gMeme = {
             fill: 'white',
             stroke: 'black',
             isDrag: false,
-            pos: { x: 450 / 2, y: 400 }
+            pos: { x: 390 / 2, y: 350 }
         }
     ]
 }
@@ -101,9 +101,14 @@ function setImgFilter(filterBy = {}) {
     return gFilterBy
 }
 
+function getSelectedLine() {
+    const { selectedLineIdx } = gMeme
+    const line = gMeme.lines[selectedLineIdx]
+    return line
+}
+
 function setLineText(txt) {
-    const { selectedLineIdx, lines } = gMeme
-    const line = lines[selectedLineIdx]
+    const line = getSelectedLine()
     line.txt = txt
 }
 
@@ -135,35 +140,30 @@ function removeLine() {
 }
 
 function SetFontIncrease() {
-    const { selectedLineIdx } = gMeme
-    const line = gMeme.lines[selectedLineIdx]
+    const line = getSelectedLine()
     if (line.size > 100) return
     line.size += 5
 }
 
 function SetFontDecrease() {
-    const { selectedLineIdx } = gMeme
-    const line = gMeme.lines[selectedLineIdx]
+    const line = getSelectedLine()
     if (line.size <= 10) return
     line.size -= 5
 }
 
 function setAlignLeft() {
-    const { selectedLineIdx } = gMeme
-    const line = gMeme.lines[selectedLineIdx]
+    const line = getSelectedLine()
     line.pos.x = 150
 }
 
 function setAlignCenter() {
-    const { selectedLineIdx } = gMeme
-    const line = gMeme.lines[selectedLineIdx]
-    line.pos.x = 225
+    const line = getSelectedLine()
+    line.pos.x = 195
 }
 
 function setAlignRight() {
-    const { selectedLineIdx } = gMeme
-    const line = gMeme.lines[selectedLineIdx]
-    line.pos.x = 300
+    const line = getSelectedLine()
+    line.pos.x = 240
 }
 
 function setFontFamily(font) {
@@ -174,14 +174,12 @@ function setFontFamily(font) {
 }
 
 function setStrokeColor(strokeColor) {
-    const { selectedLineIdx } = gMeme
-    const line = gMeme.lines[selectedLineIdx]
+    const line = getSelectedLine()
     line.stroke = strokeColor
 }
 
 function setFillColor(fillColor) {
-    const { selectedLineIdx } = gMeme
-    const line = gMeme.lines[selectedLineIdx]
+    const line = getSelectedLine()
     line.fill = fillColor
 }
 
@@ -201,4 +199,8 @@ function setLinesCurrLang() {
 
 function saveMemesToStorage() {
     saveToStorage(STORAGE_KEY, gMeme)
+}
+
+function getKeywordsMap() {
+    return gKeywordSearchCountMap
 }

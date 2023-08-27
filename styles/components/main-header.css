@@ -1,15 +1,14 @@
 .main-header {
+    min-width: max-content;
     border-radius: 10px;
     background-color: var(--clrSecondary);
     margin: .7em 1em;
 }
 
-.main-header a {
-    /* position: relative; */
+.main-header .main-nav a {
     display: grid;
     justify-content: center;
     align-items: center;
-    /* margin-inline-end: .8em; */
 
     min-width: var(--headerHeight);
     min-height: var(--headerHeight);
@@ -21,6 +20,27 @@
 
 .main-header select {
     position: absolute;
-    top: 6em;
-    padding: 10px 15px;
+    top: 7.5em;
+    padding: 5px 15px;
+    font-size: .6rem;
+}
+
+header li:nth-of-type(2)::before {
+    content: 'Work in progress';
+    position: absolute;
+    /* bottom: 100%; */
+    /* left: 50%; */
+    transform: translateY(50%);
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 0.3rem 0.5rem;
+    border-radius: 4px;
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.3s, visibility 0.3s;
+}
+
+header li:nth-of-type(2):hover::before {
+    visibility: visible;
+    opacity: 1;
 }

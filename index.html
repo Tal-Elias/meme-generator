@@ -19,9 +19,16 @@
             </select>
             <div class="main-nav">
                 <ul class="clean-list grid flow-column">
-                    <li><a href="#" data-trans="link-gallery" class="link-gallery" onclick="toggleGallery()">Gallery</a></li>
-                    <li><a href="#" data-trans="link-saved" class="link-saved">Saved</a></li>
-                    <li><a href="#" data-trans="link-about" class="link-about" onclick="onReadAbout()">About</a></li>
+                    <li>
+                        <a href="#" data-trans="link-gallery" class="link-gallery"
+                            onclick="location.reload()">Gallery</a>
+                    </li>
+                    <li>
+                        <a href="#" data-trans="link-saved" class="link-saved">Saved</a>
+                    </li>
+                    <li>
+                        <a href="#" data-trans="link-about" class="link-about" onclick="onReadAbout()">About</a>
+                    </li>
                 </ul>
             </div>
             <button class="btn-toggle-menu" onclick="toggleMenu()">☰</button>
@@ -31,7 +38,7 @@
     <main class="main-content hide">
         <div class="editor">
             <div class="canvas-container">
-                <canvas width="450" height="450"></canvas>
+                <canvas width="390" height="390"></canvas>
             </div>
             <section class="meme-editor flex column align-center">
                 <input class="text-input" type="text" oninput="onInputText(this.value)">
@@ -59,7 +66,7 @@
                     </button>
                 </div>
                 <div class="user-buttons">
-                    <!-- <a data-trans="save" class="btn save fa" onclick="onSaveMeme()">Save</a> -->
+                    <!-- <a data-trans="save" class="btn save fa" onclick="onSaveMeme()">Save</a> --> <!-- WIP -->
                     <a data-trans="download" class="btn download fa" onclick="onDownloadCanvas(this)">Download</a>
                     <button data-trans="share" class="btn share fa" onclick="onUploadImg()">Share</button>
                 </div>
@@ -68,20 +75,33 @@
     </main>
 
     <section class="gallery">
-        <div class="search-bar">
+        <div class="search-bar flex">
             <input type="text" data-trans="search-placeholder" class="text-input"
                 oninput="onSetFilterBy({keywords:this.value})" placeholder="Search here...">
+        </div>
+        <div class="keywords">
+            <ul class="clean-list grid flow-column" onclick="onSetFilterByKeyword(event)">
+                <li>Funny</li>
+                <li>Cat</li>
+                <li>Baby</li>
+                <li>Dog</li>
+                <li>Crazy</li>
+                <li>Children</li>
+                <li>Movies</li>
+            </ul>
         </div>
         <div class="gallery-container"></div>
     </section>
 
     <footer class="main-footer">
-
+        <!-- WIP -->
     </footer>
 
     <dialog class="dialog" onclick="onClickOutside(event, this)">
         <h2>About me</h2>
-        <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Repellat enim ex impedit, necessitatibus soluta vero amet laudantium, accusamus at nisi fuga, odio facere! Ratione nobis libero aliquid enim itaque harum.</p>
+        <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Repellat enim ex impedit, necessitatibus soluta
+            vero amet laudantium, accusamus at nisi fuga, odio facere! Ratione nobis libero aliquid enim itaque harum.
+        </p>
         <div class="modal-btn-container">
             <button class="btn round" onclick="closeModal()">Close</button>
         </div>

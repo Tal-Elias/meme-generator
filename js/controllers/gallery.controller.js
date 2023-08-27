@@ -20,3 +20,21 @@ function onSetFilterBy(filterBy) {
     filterBy = setImgFilter(filterBy)
     renderGallery()
 }
+
+function onSetFilterByKeyword(ev) {
+    const keyword = ev.target.innerText.toLowerCase()
+    onSetFilterBy({keywords: keyword})
+}
+
+function setKeywordsSize() {
+    const keywordsMap = getKeywordsMap()
+    const keywordsList = document.querySelectorAll('.keywords ul li')
+
+    keywordsList.forEach(keyword => {
+        const elKeyword = keyword.innerText.toLowerCase()
+        if (keywordsMap[elKeyword]) {
+            const fontSize = keywordsMap[elKeyword] * 2 + 12
+            keyword.style.fontSize = `${fontSize}px`
+        }
+    })
+}

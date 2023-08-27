@@ -1,8 +1,11 @@
 .meme-editor {
-    align-self: center;
-    gap: 20px;
-    
-    padding: 20px;
+    justify-content: center;
+    gap: 1em;
+
+    width: 390px;
+    min-height: 390px;
+    padding: 1em;
+
     border-radius: 10px;
     box-shadow:
         0 0 20px 10px rgba(128, 0, 128, 0.3),
@@ -22,7 +25,7 @@
 }
 
 .meme-editor .add-line {
-    background-color: greenyellow;
+    background-color: rgb(255, 47, 193);
 }
 
 .meme-editor .switch-line {
@@ -35,9 +38,15 @@
 
 .meme-editor .edit-buttons {
     display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: 15px;
+}
+
+.meme-editor .edit-lines {
+    display: flex;
     gap: 15px;
 }
 
 .meme-editor select {
-    grid-area: 2 / span 3;
+    grid-area: 4 / span 3;
 }

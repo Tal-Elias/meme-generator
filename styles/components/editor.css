@@ -1,6 +1,15 @@
-.editor { 
+.editor {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-items: center;
+
+    margin-left: 1em;
+    margin-right: 1em;
+}
+
+.editor canvas {
+    border-radius: 10px;
+    cursor: grab;
+    display: block;
 }

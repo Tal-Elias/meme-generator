@@ -1,6 +1,6 @@
 .logo {
+    position: relative;
     font-family: press-start-2p;
-    /* margin-inline-start: 1.2em; */
     font-size: 2rem;
     color: var(--clrTertiary);
     cursor: pointer;
